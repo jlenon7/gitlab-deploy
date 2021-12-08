@@ -1,7 +1,7 @@
 FROM ubuntu:20.04
 
 RUN apt-get update \
-  && DEBIAN_FRONTEND=noninteractive apt-get install -y awscli curl gcc g++ make \
+  && DEBIAN_FRONTEND=noninteractive apt-get install -y awscli curl gcc g++ make zip \
   && curl -sL https://deb.nodesource.com/setup_16.x | bash - \
   && apt-get install -y nodejs \
   && curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" \
