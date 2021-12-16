@@ -10,7 +10,7 @@
   <img alt="License" src="https://img.shields.io/badge/license-MIT-brightgreen?style=for-the-badge&logo=appveyor">
 </p>
 
-A simple docker image to help in your deploys, `gitlab-deploy` is based in a `ubuntu` image and comes with `awscli, nodejs, kubectl, helm and templating`.
+A simple docker image to help in your deploys, `gitlab-deploy` is based in a `ubuntu` image and comes with `zip, awscli, nodejs, kubectl, kustomize, helm and templating`.
 Feel free to make a `pull request` to add more content to this image.
 
 <img src=".github/gitlab-deploy.png" width="200px" align="right" hspace="30px" vspace="100px">
