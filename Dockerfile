@@ -7,6 +7,8 @@ RUN apt-get update \
   && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" \
   && [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" \
   && nvm install node \
+  && nvm install 8.12.0 \
+  && nvm install 12.11.0 \
   && nvm install 16.14.0 \
   && npm install -g @jlenon7/templating \
   && curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" \
