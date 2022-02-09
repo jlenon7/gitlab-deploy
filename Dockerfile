@@ -6,10 +6,9 @@ RUN apt-get update \
   && export NVM_DIR="$HOME/.nvm" \
   && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" \
   && [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" \
-  && nvm install node \
   && nvm install 8.12.0 \
   && nvm install 12.11.0 \
-  && nvm install 16.14.0 \
+  && nvm install --lts \
   && npm install -g @jlenon7/templating \
   && curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" \
   && install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl \
