@@ -1,25 +1,47 @@
-# gitlab-deploy 🐳
+# Gitlab Deploy 🐳
 
-> A docker image to use inside Gitlab CI for deploys
+> A docker image to use inside Gitlab CI pipelines
 
-<p>
-  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/jlenon7/gitlab-deploy?style=for-the-badge&logo=appveyor">
-
-  <img alt="Repository size" src="https://img.shields.io/github/repo-size/jlenon7/gitlab-deploy?style=for-the-badge&logo=appveyor">
-
-  <img alt="License" src="https://img.shields.io/badge/license-MIT-brightgreen?style=for-the-badge&logo=appveyor">
-</p>
-
-A simple docker image to help in your deploys, `gitlab-deploy` is based in a `ubuntu` image and comes with `zip, awscli, nodejs, kubectl, kustomize, helm and templating`.
+A simple docker image to help in your pipelines, `gitlab-deploy` is based in a `ubuntu` image and comes with `curl, make, zip, awscli, nvm, npm, nodejs, kubectl, helm and templating`.
 Feel free to make a `pull request` to add more content to this image.
 
-<img src=".github/gitlab-deploy.png" width="200px" align="right" hspace="30px" vspace="100px">
+<img src=".gitlab/gitlab-deploy.png" width="200px" align="right" hspace="30px" vspace="100px">
+
+## Adding more content to this image
+
+> Gitlab CI uses DIND to execute the steps from the pipeline. If you want to add more content to the image, always remember that your command should exist in the interactive mode to work inside the pipeline
+
+```yaml
+# You can find this step inside ./.gitlab-ci.yml file
+
+# This is the actual CI pipeline of this project and runs only on new merge_request
+Build and test the image commands:
+  image: docker:latest
+  stage: test
+  script:
+    - docker build -t test-gitlab-deploy .
+    - docker run -i test-gitlab-deploy aws help
+    - docker run -i test-gitlab-deploy curl --help
+    - docker run -i test-gitlab-deploy zip -v
+    - docker run -i test-gitlab-deploy make -v
+    - docker run -i test-gitlab-deploy npm -v
+    - docker run -i test-gitlab-deploy node -v
+    - docker run -i test-gitlab-deploy templating -v
+    - docker run -i test-gitlab-deploy helm
+    - docker run -i test-gitlab-deploy kubectl
+    - docker run -i test-gitlab-deploy /bin/bash -c "source /usr/local/bin/nvm/nvm.sh && nvm -v"
+    # Add your command over here. Example -> docker run -i test-gitlab-deploy javac
+  only:
+    - merge_requests
+```
 
 ## Pipeline Example
 
+> A .gitlab-ci.yml file as example
+
 ```yaml
 services:
-  - docker:dind
+  - docker:18.09-dind
 
 variables:
   IMAGE_LATEST: nickname-organization/your-image-name-here:latest
@@ -76,6 +98,21 @@ Deploy image to K8S Cluster:
     - main
 ```
 
+## Warning under nvm CLI
+
+> To use nvm inside your pipelines you will need to use /bin/bash and source nvm.sh first
+
+```yaml
+Example:
+  image: jlenon7/gitlab-deploy:latest
+  stage: deploy
+  script:
+    # Install node 14.2 version and reinstall all global packages from version 16.2
+    - /bin/bash -c "source /usr/local/bin/nvm/nvm.sh && nvm install 14.2.0 && nvm reinstall-packages 16.2.0"
+  only:
+    - main
+```
+
 ---
 
-Made with 🖤 by [jlenon7](https://github.com/jlenon7) :wave:
+Made with 🖤 by [jlenon7](https://github.com/jlenon7) 👋
